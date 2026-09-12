@@ -1,0 +1,1938 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        AI Cybersecurity Monitoring
+    </title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+
+            margin: 0;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #eef2ff,
+                    #f8fafc
+                );
+
+            color: #1e293b;
+        }
+
+        /* ==============================
+           HEADER
+        ============================== */
+
+        .header {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #0f172a,
+                    #1e3a8a
+                );
+
+            color: white;
+
+            padding: 22px 35px;
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items: center;
+
+            box-shadow:
+                0 4px 15px
+                rgba(0,0,0,0.15);
+        }
+
+        .logo {
+
+            font-size: 26px;
+
+            font-weight: bold;
+        }
+
+        .status {
+
+            background: #16a34a;
+
+            padding:
+                8px 16px;
+
+            border-radius: 20px;
+
+            font-size: 14px;
+
+            font-weight: bold;
+        }
+
+        /* ==============================
+           MAIN
+        ============================== */
+
+        .container {
+
+            width: 94%;
+
+            max-width: 1400px;
+
+            margin: 30px auto;
+        }
+
+        h1 {
+
+            margin-bottom: 5px;
+
+            color: #0f172a;
+        }
+
+        .subtitle {
+
+            color: #64748b;
+
+            margin-top: 0;
+
+            margin-bottom: 25px;
+        }
+
+        /* ==============================
+           FLASH
+        ============================== */
+
+        .message {
+
+            padding: 15px 18px;
+
+            border-radius: 10px;
+
+            margin-bottom: 20px;
+
+            font-weight: bold;
+        }
+
+        .message.success {
+
+            background: #dcfce7;
+
+            color: #166534;
+
+            border:
+                1px solid #86efac;
+        }
+
+        .message.error {
+
+            background: #fee2e2;
+
+            color: #991b1b;
+
+            border:
+                1px solid #fca5a5;
+        }
+
+        /* ==============================
+           CARDS
+        ============================== */
+
+        .box {
+
+            background: white;
+
+            border-radius: 15px;
+
+            padding: 25px;
+
+            margin-bottom: 25px;
+
+            box-shadow:
+                0 5px 20px
+                rgba(15,23,42,0.08);
+        }
+
+        .box h2 {
+
+            margin-top: 0;
+
+            color: #0f172a;
+        }
+
+        /* ==============================
+           UPLOAD
+        ============================== */
+
+        .upload-form {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 12px;
+
+            align-items: center;
+        }
+
+        input[type="file"] {
+
+            background: #f8fafc;
+
+            border:
+                1px solid #cbd5e1;
+
+            padding: 12px;
+
+            border-radius: 8px;
+
+            flex: 1;
+
+            min-width: 250px;
+        }
+
+        .btn {
+
+            border: none;
+
+            padding:
+                12px 20px;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            font-weight: bold;
+
+            color: white;
+        }
+
+        .upload-btn {
+
+            background: #2563eb;
+        }
+
+        .upload-btn:hover {
+
+            background: #1d4ed8;
+        }
+
+        /* ==============================
+           MANUAL PREDICTION
+        ============================== */
+
+        .manual-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 15px;
+        }
+
+        .input-group label {
+
+            display: block;
+
+            font-weight: bold;
+
+            font-size: 13px;
+
+            color: #475569;
+
+            margin-bottom: 7px;
+        }
+
+        .input-group input {
+
+            width: 100%;
+
+            padding: 12px;
+
+            border:
+                1px solid #cbd5e1;
+
+            border-radius: 8px;
+
+            font-size: 15px;
+        }
+
+        .predict-area {
+
+            margin-top: 18px;
+        }
+
+        .predict-btn {
+
+            background: #7c3aed;
+
+            font-size: 15px;
+        }
+
+        .predict-btn:hover {
+
+            background: #6d28d9;
+        }
+
+        /* ==============================
+           MANUAL RESULT
+        ============================== */
+
+        .prediction-result {
+
+            margin-top: 22px;
+
+            padding: 22px;
+
+            border-radius: 12px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #eff6ff,
+                    #f5f3ff
+                );
+
+            border:
+                1px solid #c7d2fe;
+        }
+
+        .prediction-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 15px;
+
+            margin-top: 15px;
+        }
+
+        .prediction-box {
+
+            background: white;
+
+            padding: 18px;
+
+            border-radius: 10px;
+
+            box-shadow:
+                0 3px 10px
+                rgba(0,0,0,0.06);
+        }
+
+        .prediction-box small {
+
+            display: block;
+
+            color: #64748b;
+
+            margin-bottom: 7px;
+        }
+
+        .prediction-box strong {
+
+            font-size: 21px;
+
+            color: #0f172a;
+        }
+
+        .safe {
+
+            color: #15803d !important;
+        }
+
+        .danger {
+
+            color: #dc2626 !important;
+        }
+
+        .warning {
+
+            color: #d97706 !important;
+        }
+
+        /* ==============================
+           STATS
+        ============================== */
+
+        .stats {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 18px;
+
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+
+            background: white;
+
+            border-radius: 15px;
+
+            padding: 22px;
+
+            box-shadow:
+                0 5px 20px
+                rgba(15,23,42,0.08);
+        }
+
+        .stat-title {
+
+            color: #64748b;
+
+            font-size: 14px;
+
+            margin-bottom: 10px;
+        }
+
+        .stat-number {
+
+            font-size: 32px;
+
+            font-weight: bold;
+
+            color: #0f172a;
+        }
+
+        /* ==============================
+           MODELS
+        ============================== */
+
+        .section-title {
+
+            margin-top: 35px;
+
+            margin-bottom: 15px;
+        }
+
+        .models {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 18px;
+        }
+
+        .model-card {
+
+            background: white;
+
+            border-radius: 15px;
+
+            padding: 22px;
+
+            box-shadow:
+                0 5px 20px
+                rgba(15,23,42,0.08);
+
+            border-top:
+                5px solid #2563eb;
+        }
+
+        .model-card h3 {
+
+            margin-top: 7px;
+        }
+
+        .model-number {
+
+            font-size: 13px;
+
+            color: #2563eb;
+
+            font-weight: bold;
+        }
+
+        .model-info {
+
+            line-height: 1.8;
+
+            color: #475569;
+        }
+
+        .active {
+
+            display: inline-block;
+
+            background: #dcfce7;
+
+            color: #166534;
+
+            padding:
+                5px 10px;
+
+            border-radius: 15px;
+
+            font-size: 12px;
+
+            font-weight: bold;
+        }
+
+        /* ==============================
+           CHARTS
+        ============================== */
+
+        .charts {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 20px;
+
+            margin-top: 20px;
+        }
+
+        .chart-card {
+
+            background: white;
+
+            border-radius: 15px;
+
+            padding: 20px;
+
+            box-shadow:
+                0 5px 20px
+                rgba(15,23,42,0.08);
+        }
+
+        .chart-container {
+
+            position: relative;
+
+            height: 330px;
+        }
+
+        /* ==============================
+           RESULT
+        ============================== */
+
+        .result-card {
+
+            background: white;
+
+            border-radius: 15px;
+
+            padding: 25px;
+
+            margin-top: 25px;
+
+            box-shadow:
+                0 5px 20px
+                rgba(15,23,42,0.08);
+        }
+
+        .result-summary {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 12px;
+
+            margin:
+                20px 0;
+        }
+
+        .result-box {
+
+            background: #f8fafc;
+
+            padding: 15px;
+
+            border-radius: 10px;
+        }
+
+        .result-box strong {
+
+            display: block;
+
+            font-size: 22px;
+
+            margin-top: 5px;
+        }
+
+        /* ==============================
+           TABLE
+        ============================== */
+
+        .table-wrapper {
+
+            overflow-x: auto;
+        }
+
+        table {
+
+            width: 100%;
+
+            border-collapse:
+                collapse;
+
+            margin-top: 15px;
+
+            min-width: 800px;
+        }
+
+        th {
+
+            background: #0f172a;
+
+            color: white;
+
+            padding: 12px;
+
+            text-align: left;
+        }
+
+        td {
+
+            padding: 11px;
+
+            border-bottom:
+                1px solid #e2e8f0;
+        }
+
+        tr:hover {
+
+            background: #f8fafc;
+        }
+
+        .normal {
+
+            color: #15803d;
+
+            font-weight: bold;
+        }
+
+        .suspicious {
+
+            color: #dc2626;
+
+            font-weight: bold;
+        }
+
+        /* ==============================
+           HISTORY
+        ============================== */
+
+        .history-header {
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items: center;
+
+            gap: 15px;
+
+            flex-wrap: wrap;
+        }
+
+        .small-delete {
+
+            padding:
+                7px 12px;
+
+            border: none;
+
+            background: #dc2626;
+
+            color: white;
+
+            border-radius: 7px;
+
+            cursor: pointer;
+
+            font-size: 12px;
+
+            font-weight: bold;
+        }
+
+        .small-delete:hover {
+
+            background: #b91c1c;
+        }
+
+        .delete-all {
+
+            padding:
+                10px 16px;
+
+            border: none;
+
+            background: #991b1b;
+
+            color: white;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            font-weight: bold;
+        }
+
+        .delete-all:hover {
+
+            background: #7f1d1d;
+        }
+
+        .empty {
+
+            color: #64748b;
+
+            padding: 20px 0;
+        }
+
+        /* ==============================
+           RESPONSIVE
+        ============================== */
+
+        @media (max-width: 1000px) {
+
+            .stats {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .models {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+            .charts {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+            .manual-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .prediction-grid {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+            .result-summary {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .stats {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+            .manual-grid {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+            .result-summary {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+            .header {
+
+                padding: 18px;
+            }
+
+            .container {
+
+                width: 92%;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<div class="header">
+
+    <div class="logo">
+        🛡️ CYBER AI
+    </div>
+
+    <div class="status">
+        ● SYSTEM ONLINE
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<div class="container">
+
+    <h1>
+        AI Cybersecurity Monitoring
+    </h1>
+
+    <p class="subtitle">
+        Intelligent Network Threat Detection System
+    </p>
+
+
+    <!-- =================================================
+         FLASH MESSAGES
+    ================================================== -->
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% if messages %}
+
+            {% for category, message in messages %}
+
+                <div class="message {{ category }}">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% endwith %}
+
+
+    <!-- =================================================
+         CSV UPLOAD
+    ================================================== -->
+
+    <div class="box">
+
+        <h2>
+            📂 Upload Network Security CSV
+        </h2>
+
+        <p>
+            Upload a compatible network-security CSV dataset.
+            The system will automatically analyze the network traffic
+            using all three AI modules.
+        </p>
+
+        <p style="color:#64748b;">
+            Supported examples: CIC-IDS, UNSW-NB15 and compatible
+            network-flow CSV files.
+        </p>
+
+        <form
+            class="upload-form"
+            action="{{ url_for('upload_csv') }}"
+            method="POST"
+            enctype="multipart/form-data"
+        >
+
+            <input
+                type="file"
+                name="csv_file"
+                accept=".csv"
+                required
+            >
+
+            <button
+                type="submit"
+                class="btn upload-btn"
+            >
+                🔍 Analyze Dataset
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- =================================================
+         MANUAL PREDICTION
+    ================================================== -->
+
+    <div class="box">
+
+        <h2>
+            ✍️ Manual Network Threat Prediction
+        </h2>
+
+        <p>
+            Enter network traffic values manually to demonstrate
+            real-time AI prediction to the examiner.
+        </p>
+
+        <form
+            action="{{ url_for('manual_predict') }}"
+            method="POST"
+        >
+
+            <div class="manual-grid">
+
+                <div class="input-group">
+
+                    <label>
+                        Packet Count
+                    </label>
+
+                    <input
+                        type="number"
+                        name="packet_count"
+                        min="0"
+                        step="any"
+                        placeholder="Example: 500"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="input-group">
+
+                    <label>
+                        Packet Size
+                    </label>
+
+                    <input
+                        type="number"
+                        name="packet_size"
+                        min="0"
+                        step="any"
+                        placeholder="Example: 800"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="input-group">
+
+                    <label>
+                        Connection Duration
+                    </label>
+
+                    <input
+                        type="number"
+                        name="connection_duration"
+                        min="0"
+                        step="any"
+                        placeholder="Example: 200"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="input-group">
+
+                    <label>
+                        Failed Connections
+                    </label>
+
+                    <input
+                        type="number"
+                        name="failed_connections"
+                        min="0"
+                        step="any"
+                        placeholder="Example: 5"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="predict-area">
+
+                <button
+                    type="submit"
+                    class="btn predict-btn"
+                >
+                    🤖 Predict Threat
+                </button>
+
+            </div>
+
+        </form>
+
+
+        <!-- =================================================
+             MANUAL RESULT
+        ================================================== -->
+
+        {% if manual_result %}
+
+        <div class="prediction-result">
+
+            <h3>
+                🎯 AI Prediction Result
+            </h3>
+
+            <p style="color:#64748b;">
+
+                Model Source:
+                <b>
+                    {{ manual_result.model_source }}
+                </b>
+
+            </p>
+
+
+            <div class="prediction-grid">
+
+
+                <!-- MODEL 1 -->
+
+                <div class="prediction-box">
+
+                    <small>
+                        MODEL 1 — ANOMALY DETECTION
+                    </small>
+
+                    <strong
+                        class="{% if manual_result.status == 'Normal' %}safe{% else %}danger{% endif %}"
+                    >
+                        {{ manual_result.status }}
+                    </strong>
+
+                </div>
+
+
+                <!-- MODEL 2 -->
+
+                <div class="prediction-box">
+
+                    <small>
+                        MODEL 2 — ATTACK CLASSIFICATION
+                    </small>
+
+                    <strong>
+                        {{ manual_result.attack_type }}
+                    </strong>
+
+                    {% if manual_result.attack_confidence is not none %}
+
+                    <small style="margin-top:8px;">
+
+                        Confidence:
+                        {{ manual_result.attack_confidence }}%
+
+                    </small>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- MODEL 3 -->
+
+                <div class="prediction-box">
+
+                    <small>
+                        MODEL 3 — RISK PREDICTION
+                    </small>
+
+                    <strong
+                        class="{% if manual_result.risk_level == 'Low' %}safe{% elif manual_result.risk_level == 'Medium' %}warning{% else %}danger{% endif %}"
+                    >
+                        {{ manual_result.risk_level }}
+                    </strong>
+
+                    {% if manual_result.risk_confidence is not none %}
+
+                    <small style="margin-top:8px;">
+
+                        Confidence:
+                        {{ manual_result.risk_confidence }}%
+
+                    </small>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- =================================================
+         STATISTICS
+    ================================================== -->
+
+    <div class="stats">
+
+        <div class="stat-card">
+
+            <div class="stat-title">
+                TOTAL NETWORK RECORDS
+            </div>
+
+            <div class="stat-number">
+                {{ total_records }}
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-title">
+                NORMAL RECORDS
+            </div>
+
+            <div class="stat-number">
+                {{ normal_records }}
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-title">
+                SUSPICIOUS RECORDS
+            </div>
+
+            <div class="stat-number">
+                {{ suspicious_records }}
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-title">
+                HIGH RISK
+            </div>
+
+            <div class="stat-number">
+                {{ high_risk }}
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         THREE AI MODELS
+    ================================================== -->
+
+    <h2 class="section-title">
+        🤖 AI Detection Modules
+    </h2>
+
+
+    <div class="models">
+
+
+        <!-- MODEL 1 -->
+
+        <div class="model-card">
+
+            <div class="model-number">
+                MODULE 1
+            </div>
+
+            <h3>
+                Network Anomaly Detection
+            </h3>
+
+            <div class="model-info">
+
+                <b>AI Model:</b>
+                Isolation Forest
+
+                <br>
+
+                <b>Purpose:</b>
+                Detect unusual network traffic
+
+                <br>
+
+                <b>Output:</b>
+                Normal / Suspicious
+
+                <br><br>
+
+                <span class="active">
+                    ● ACTIVE
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- MODEL 2 -->
+
+        <div class="model-card">
+
+            <div class="model-number">
+                MODULE 2
+            </div>
+
+            <h3>
+                Attack Classification
+            </h3>
+
+            <div class="model-info">
+
+                <b>AI Model:</b>
+                Random Forest
+
+                <br>
+
+                <b>Purpose:</b>
+                Identify attack category
+
+                <br>
+
+                <b>Output:</b>
+                Attack Type / Normal
+
+                <br><br>
+
+                <span class="active">
+                    ● ACTIVE
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- MODEL 3 -->
+
+        <div class="model-card">
+
+            <div class="model-number">
+                MODULE 3
+            </div>
+
+            <h3>
+                Risk Prediction
+            </h3>
+
+            <div class="model-info">
+
+                <b>AI Model:</b>
+                Random Forest
+
+                <br>
+
+                <b>Purpose:</b>
+                Estimate threat severity
+
+                <br>
+
+                <b>Output:</b>
+                Low → Critical
+
+                <br><br>
+
+                <span class="active">
+                    ● ACTIVE
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         CHARTS
+    ================================================== -->
+
+    <h2 class="section-title">
+        📊 Security Analytics
+    </h2>
+
+
+    <div class="charts">
+
+
+        <!-- ATTACK CHART -->
+
+        <div class="chart-card">
+
+            <h3>
+                Attack Classification
+            </h3>
+
+            <div class="chart-container">
+
+                <canvas id="attackChart"></canvas>
+
+            </div>
+
+        </div>
+
+
+        <!-- RISK CHART -->
+
+        <div class="chart-card">
+
+            <h3>
+                Risk Distribution
+            </h3>
+
+            <div class="chart-container">
+
+                <canvas id="riskChart"></canvas>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         LATEST UPLOAD RESULT
+    ================================================== -->
+
+    {% if upload_result %}
+
+    <div class="result-card">
+
+        <h2>
+            ✅ Latest Dataset Analysis
+        </h2>
+
+        <p>
+
+            <b>File:</b>
+            {{ upload_result.filename }}
+
+        </p>
+
+        <p>
+
+            <b>Dataset Type:</b>
+            {{ upload_result.dataset_type }}
+
+        </p>
+
+        <p>
+
+            <b>Attack Label Source:</b>
+            {{ upload_result.label_source }}
+
+        </p>
+
+
+        {% if attack_accuracy is not none %}
+
+        <p>
+
+            <b>
+                Attack Classification Accuracy:
+            </b>
+
+            {{ attack_accuracy }}%
+
+        </p>
+
+        {% endif %}
+
+
+        {% if risk_accuracy is not none %}
+
+        <p>
+
+            <b>
+                Risk Prediction Accuracy:
+            </b>
+
+            {{ risk_accuracy }}%
+
+        </p>
+
+        {% endif %}
+
+
+        <div class="result-summary">
+
+
+            <div class="result-box">
+
+                Total
+
+                <strong>
+                    {{ upload_result.total }}
+                </strong>
+
+            </div>
+
+
+            <div class="result-box">
+
+                Normal
+
+                <strong>
+                    {{ upload_result.normal }}
+                </strong>
+
+            </div>
+
+
+            <div class="result-box">
+
+                Suspicious
+
+                <strong>
+                    {{ upload_result.suspicious }}
+                </strong>
+
+            </div>
+
+
+            <div class="result-box">
+
+                High Risk
+
+                <strong>
+                    {{ upload_result.high_risk }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- RESULT TABLE -->
+
+        <h3>
+            🔎 Detection Results
+        </h3>
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Packet Count
+                        </th>
+
+                        <th>
+                            Packet Size
+                        </th>
+
+                        <th>
+                            Duration
+                        </th>
+
+                        <th>
+                            Failed Connections
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Attack Type
+                        </th>
+
+                        <th>
+                            Risk Level
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for row in upload_result.rows %}
+
+                    <tr>
+
+                        <td>
+                            {{ row.packet_count }}
+                        </td>
+
+                        <td>
+                            {{ row.packet_size }}
+                        </td>
+
+                        <td>
+                            {{ row.connection_duration }}
+                        </td>
+
+                        <td>
+                            {{ row.failed_connections }}
+                        </td>
+
+                        <td>
+
+                            {% if row.status == "Suspicious" %}
+
+                                <span class="suspicious">
+                                    {{ row.status }}
+                                </span>
+
+                            {% else %}
+
+                                <span class="normal">
+                                    {{ row.status }}
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+                            {{ row.attack_type }}
+                        </td>
+
+                        <td>
+                            {{ row.risk_level }}
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+
+    <!-- =================================================
+         HISTORY
+    ================================================== -->
+
+    <div class="box">
+
+        <div class="history-header">
+
+            <h2>
+                🗃️ Upload History
+            </h2>
+
+
+            {% if history %}
+
+            <form
+                action="{{ url_for('delete_all_history') }}"
+                method="POST"
+                onsubmit="
+                    return confirm(
+                        'Are you sure you want to DELETE ALL uploaded dataset history?'
+                    );
+                "
+            >
+
+                <button
+                    type="submit"
+                    class="delete-all"
+                >
+                    🗑️ Delete All History
+                </button>
+
+            </form>
+
+            {% endif %}
+
+        </div>
+
+
+        {% if history %}
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            File Name
+                        </th>
+
+                        <th>
+                            Dataset Type
+                        </th>
+
+                        <th>
+                            Upload Time
+                        </th>
+
+                        <th>
+                            Records
+                        </th>
+
+                        <th>
+                            Suspicious
+                        </th>
+
+                        <th>
+                            High Risk
+                        </th>
+
+                        <th>
+                            Action
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for item in history %}
+
+                    <tr>
+
+                        <td>
+                            {{ item.filename }}
+                        </td>
+
+                        <td>
+                            {{ item.dataset_type }}
+                        </td>
+
+                        <td>
+                            {{ item.created_at }}
+                        </td>
+
+                        <td>
+                            {{ item.records }}
+                        </td>
+
+                        <td>
+                            {{ item.suspicious }}
+                        </td>
+
+                        <td>
+                            {{ item.high_risk }}
+                        </td>
+
+                        <td>
+
+                            <form
+                                action="{{ url_for('delete_dataset') }}"
+                                method="POST"
+                                onsubmit="
+                                    return confirm(
+                                        'Are you sure you want to delete this dataset history?'
+                                    );
+                                "
+                            >
+
+                                <input
+                                    type="hidden"
+                                    name="filename"
+                                    value="{{ item.filename }}"
+                                >
+
+                                <input
+                                    type="hidden"
+                                    name="created_at"
+                                    value="{{ item.created_at }}"
+                                >
+
+                                <button
+                                    type="submit"
+                                    class="small-delete"
+                                >
+                                    🗑️ Delete
+                                </button>
+
+                            </form>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+        <p class="empty">
+            No uploaded dataset history available.
+        </p>
+
+        {% endif %}
+
+    </div>
+
+
+</div>
+
+
+<!-- =====================================================
+     CHART JAVASCRIPT
+===================================================== -->
+
+<script>
+
+    // ==============================================
+    // ATTACK DATA
+    // ==============================================
+
+    const attackLabels = [
+
+        {% for item in attack_data %}
+
+            {{ item.attack_type | tojson }},
+
+        {% endfor %}
+
+    ];
+
+
+    const attackValues = [
+
+        {% for item in attack_data %}
+
+            {{ item.count }},
+
+        {% endfor %}
+
+    ];
+
+
+    // ==============================================
+    // RISK DATA
+    // ==============================================
+
+    const riskLabels = [
+
+        {% for item in risk_data %}
+
+            {{ item.risk_level | tojson }},
+
+        {% endfor %}
+
+    ];
+
+
+    const riskValues = [
+
+        {% for item in risk_data %}
+
+            {{ item.count }},
+
+        {% endfor %}
+
+    ];
+
+
+    // ==============================================
+    // ATTACK CHART
+    // ==============================================
+
+    new Chart(
+
+        document.getElementById(
+            "attackChart"
+        ),
+
+        {
+
+            type: "bar",
+
+            data: {
+
+                labels:
+                    attackLabels,
+
+                datasets: [
+
+                    {
+
+                        label:
+                            "Network Records",
+
+                        data:
+                            attackValues,
+
+                        borderWidth:
+                            1
+
+                    }
+
+                ]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                plugins: {
+
+                    legend: {
+
+                        display: true
+
+                    }
+
+                },
+
+                scales: {
+
+                    y: {
+
+                        beginAtZero: true
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    );
+
+
+    // ==============================================
+    // RISK CHART
+    // ==============================================
+
+    new Chart(
+
+        document.getElementById(
+            "riskChart"
+        ),
+
+        {
+
+            type: "doughnut",
+
+            data: {
+
+                labels:
+                    riskLabels,
+
+                datasets: [
+
+                    {
+
+                        label:
+                            "Risk Level",
+
+                        data:
+                            riskValues,
+
+                        borderWidth:
+                            1
+
+                    }
+
+                ]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                plugins: {
+
+                    legend: {
+
+                        position:
+                            "bottom"
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    );
+
+</script>
+
+
+</body>
+
+</html>
